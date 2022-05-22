@@ -7,6 +7,12 @@ const User = require("../models/User");
 
 
 //routes
+
+router.get("/", async( req,res) => {
+    res.status(200).json("Server Running");
+})
+
+
 router.post('/postnotes',isAuthenticated,async(req,res) => {
     try {
        

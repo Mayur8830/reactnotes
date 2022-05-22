@@ -13,6 +13,7 @@ const Login = () => {
     const [password,setPassword] = useState("");
     const error = useSelector(state => state.user.error);
     const dispatch = useDispatch()       
+    const axiosInstance = axios.create({baseURL:process.env.REACT_APP_API_URL});
 
   const loginHandler = async (e) => {
       e.preventDefault();
@@ -22,7 +23,7 @@ const Login = () => {
             type:"LoginRequest"
         })
 
-        const {data} = await axios.post("/login",{email,password},{
+        const {data} = await axiosInstance.post("/login",{email,password},{
             headers:{
                 "Content-Type":"application/json"
             }

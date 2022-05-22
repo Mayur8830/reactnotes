@@ -5,12 +5,18 @@ const cors = require('cors')
 
 require('dotenv').config({path:"./config.env"});
 require('./db/conn')
+const notes = require("./routes/Notes");
+const user = require("./routes/User");
+
 app.use(express.json());
+app.use(express.urlencoded({extended:true}))
 app.use(cookieParser());
 
 app.use(cors());
-app.use(require("./routes/Notes"));
-app.use(require("./routes/User"));
+
+app.use("/api/v1",user);
+app.use("/api/v1",notes);
+
 
 
 

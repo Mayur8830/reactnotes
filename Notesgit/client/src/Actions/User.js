@@ -1,4 +1,6 @@
 import axios from "axios"
+const axiosInstance = axios.create({baseURL:process.env.REACT_APP_API_URL});
+
 
 
 
@@ -10,7 +12,7 @@ export const LoginUser = (email,password) => async (dispatch) => {
             type:"LoginRequest"
         })
 
-        const {data} = await axios.post("/login",{email,password},{
+        const {data} = await axiosInstance.post("/login",{email,password},{
 
             headers:{
                 "Content-Type":"application/json"
@@ -40,7 +42,7 @@ export const LoadUser = () => async (dispatch) => {
             type:"LoadUserRequest"
         })
 
-       const {data} = await axios.get("/me")
+       const {data} = await axiosInstance.get("/me")
 
        
 
@@ -67,7 +69,7 @@ export const LogoutUser = () => async (dispatch) => {
             type:"LogoutUserRequest"
         })
 
-        await axios.get("/logout")
+        await axiosInstance.get("/logout")
 
         dispatch({
             type:"BlurActive",

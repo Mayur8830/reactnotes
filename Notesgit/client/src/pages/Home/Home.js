@@ -11,6 +11,7 @@ const Home = () => {
   const [id,setId] = useState("");
   const notes = useSelector(state => state.user.user.notes);
   const {blurActive} = useSelector(state => state.user);
+  const axiosInstance = axios.create({baseURL:process.env.REACT_APP_API_URL});
 
 // console.log(a);
 
@@ -27,7 +28,7 @@ const Addnote = () => {
       note:note,
       id,
   }
-  axios.post("/postnotes",obj).then(res => {
+  axiosInstance.post("/postnotes",obj).then(res => {
     if(res.data === "Notes Added" || res.data === "Notes Updated"){
      dispatch(LoadUser());
      alert(res.data)
@@ -49,7 +50,7 @@ const Addnote = () => {
 
  const deleteNote = (id) => {
  try {
-  axios.delete(`/deletenotes/${id}`)
+  axiosInstance.delete(`/deletenotes/${id}`)
   .then(res => {
      if(res.data === "Note Deleted"){
        dispatch(LoadUser());
