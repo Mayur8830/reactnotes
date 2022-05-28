@@ -98,7 +98,12 @@ router.post("/login",async (req,res) => {
  return res.status(200).cookie("token",token,option).json({
       success:true,
       user:userdata,
+      token
   })
+//  return res.status(200).cookie("token",token,option).json({
+//       success:true,
+//       user:userdata,
+//   })
 
 
   }catch(err){
@@ -116,7 +121,7 @@ router.post("/login",async (req,res) => {
       
      return res
      .status(200)
-     .cookie('token',null,{expires:new Date(Date.now()),httpOnly:true})
+    //  .cookie('token',null,{expires:new Date(Date.now()),httpOnly:true})
      .json({
        success:true,
        message:"Logged Out",

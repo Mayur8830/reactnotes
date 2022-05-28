@@ -10,6 +10,7 @@ const { user }  = useSelector(state => state.user)
 
   const LogoutHandler = () => {
     dispatch(LogoutUser());
+    localStorage.removeItem('token');
   }
   
 

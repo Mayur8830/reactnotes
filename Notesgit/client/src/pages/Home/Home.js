@@ -28,7 +28,11 @@ const Addnote = () => {
       note:note,
       id,
   }
-  axiosInstance.post("/postnotes",obj).then(res => {
+   axiosInstance.post("/postnotes",obj,{
+    headers: {
+      'x-access-token': localStorage.getItem('token')
+  },
+   }).then(res => {
     if(res.data === "Notes Added" || res.data === "Notes Updated"){
      dispatch(LoadUser());
      alert(res.data)
@@ -50,7 +54,11 @@ const Addnote = () => {
 
  const deleteNote = (id) => {
  try {
-  axiosInstance.delete(`/deletenotes/${id}`)
+  axiosInstance.delete(`/deletenotes/${id}`,{
+    headers: {
+      'x-access-token': localStorage.getItem('token')
+  },
+  })
   .then(res => {
      if(res.data === "Note Deleted"){
        dispatch(LoadUser());

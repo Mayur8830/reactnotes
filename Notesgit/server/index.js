@@ -18,8 +18,6 @@ app.use("/api/v1",user);
 app.use("/api/v1",notes);
 
 
-
-
 app.listen(process.env.PORT,() => {
     console.log("App is Running on Port : ",process.env.PORT);
 })

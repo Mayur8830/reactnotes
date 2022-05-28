@@ -8,12 +8,22 @@ import axios from 'axios'
 
 
 const Login = () => {
-  const navigate = useNavigate()
+   const navigate = useNavigate()
     const [email,setEmail] = useState("");
     const [password,setPassword] = useState("");
     const error = useSelector(state => state.user.error);
+    const {isAuthenticated} = useSelector(state => state.user);
     const dispatch = useDispatch()       
     const axiosInstance = axios.create({baseURL:process.env.REACT_APP_API_URL});
+
+
+    useEffect(() => {
+      if(isAuthenticated){
+        navigate("/")
+      }
+    }, [navigate,isAuthenticated])
+   
+
 
   const loginHandler = async (e) => {
       e.preventDefault();
@@ -23,12 +33,13 @@ const Login = () => {
             type:"LoginRequest"
         })
 
-        const {data} = await axiosInstance.post("/login",{email,password},{
+        const {data} = await axiosInstance.post(`/login`,{email,password},{
             headers:{
                 "Content-Type":"application/json"
             }
         })
 
+        localStorage.setItem("token",data.token);
         dispatch({
             type:"LoginSuccess",
             payload:data.user
@@ -44,6 +55,8 @@ const Login = () => {
         
     }  
   }
+
+  // console.log(process.env.REACT_APP_API_URL);
 
   useEffect(() => {
   if(error) {

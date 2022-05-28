@@ -12,13 +12,18 @@ import {LoadUser} from './Actions/User'
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute'
 
 
+
 function App() {
   const dispatch = useDispatch();
   const {userloading,isAuthenticated} =  useSelector(state => state.user); 
 
 useEffect(() => {
- dispatch(LoadUser());
-}, [dispatch,isAuthenticated])
+  if(localStorage.getItem('token') !== null){
+    dispatch(LoadUser());
+  }
+  
+ 
+}, [dispatch])
 
 
 if(userloading){
@@ -32,12 +37,7 @@ if(userloading){
     <Router>
      {isAuthenticated && < Navbar />}
        < Routes >
-         {/* < Route path='/'  element={ < Home />}/>
-         < Route path='/about'  element={ < About />}/>
-         < Route path='/contact'  element={ < Contact />}/>
-         < Route path='/service'  element={ < Services />}/>
-         < Route path='/login'  element={ < Login />}/> */}
-
+      
          < Route path='/login'  element={ < Login />}/>
          
          <Route element ={ <ProtectedRoute />  } >

@@ -5,6 +5,7 @@ const axiosInstance = axios.create({baseURL:process.env.REACT_APP_API_URL});
 
 
 
+
 export const LoginUser = (email,password) => async (dispatch) => {
     try {
 
@@ -37,12 +38,15 @@ export const LoginUser = (email,password) => async (dispatch) => {
 
 export const LoadUser = () => async (dispatch) => {
     try {
-
         dispatch({
             type:"LoadUserRequest"
         })
 
-       const {data} = await axiosInstance.get("/me")
+       const {data} = await axiosInstance.get("/me",{
+        headers: {
+            'x-access-token': localStorage.getItem('token')
+        },
+       });
 
        
 
@@ -52,11 +56,21 @@ export const LoadUser = () => async (dispatch) => {
         })
 
     } catch (err) {
-        dispatch({
-            type:"LoadUserFailure",
-            payload:err.response.data.message
-
-        })
+        if(err.response.data.message === "jwt expired"){
+            localStorage.removeItem('token');
+            dispatch({
+                type:"LoadUserFailure",
+                payload:""
+    
+            })
+        }else{
+            dispatch({
+                type:"LoadUserFailure",
+                payload:err.response.data.message
+    
+            })
+        }
+        
         
     }
 }
@@ -76,11 +90,9 @@ export const LogoutUser = () => async (dispatch) => {
             payload: false
           })
 
-
         dispatch({
             type:"LogoutUserSuccess",
         })
-
       
     } catch (err) {
         dispatch({

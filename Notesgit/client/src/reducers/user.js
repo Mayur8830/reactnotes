@@ -2,7 +2,7 @@ import { createReducer } from "@reduxjs/toolkit";
 
 const initialState = {
     isAuthenticated : false,
-    userloading:true,
+    userloading:false,
     blurActive:false
 };
 
